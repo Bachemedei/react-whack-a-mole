@@ -52,10 +52,12 @@ function App() {
 
   // Methods
   const gameLoop = () => {
-    setScore(0)
-    let number = Math.round(Math.random() * 3) + 1;
-    setMole({ isVisible: true, hole: number });
-    setPlaying(true);
+    if (playing === false) {
+      setScore(0)
+      let number = Math.round(Math.random() * 3) + 1;
+      setMole({ isVisible: true, hole: number });
+      setPlaying(true);
+    }
   };
 
   const handleClick = (event, moleNumber) => {
