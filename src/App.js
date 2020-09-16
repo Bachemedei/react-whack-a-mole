@@ -1,73 +1,99 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Mole from "./Components/Moles/Moles";
+import Hole from "./Components/Hole/Hole";
+import "./App.css";
+import Score from "./Components/Score/Score";
 
 function App() {
   // Variables
-  const [moles, setMoles] = useState([
-    {
-      text: "Mole 1",
-      isVisible: false,
-    },
-    {
-      text: "Mole 2",
-      isVisible: false,
-    },
-    {
-      text: "Mole 3",
-      isVisible: false,
-    },
-    {
-      text: "Mole 4",
-      isVisible: false,
-    },
-  ]);
+  const [mole, setMole] = useState({
+    hole: 1,
+    isVisible: false,
+  });
+
+  const [playing, setPlaying] = useState(false);
+
+  const [counter, setCounter] = useState(0);
+
+  const [score, setScore] = useState(0);
+
+  const [highScore, setHighScore] = useState(0);
+
+  useEffect(() => {
+    if (playing === false) return;
+    if (mole.isVisible === true) {
+      const time = Math.round(Math.random() * 700) + 400;
+      setTimeout(() => {
+        setMole({ ...mole, isVisible: false });
+      }, time);
+    } else {
+      const time = Math.round(Math.random() * 2000) + 500;
+      console.log("App -> time", time);
+      setTimeout(() => {
+        let number = Math.round(Math.random() * 3) + 1;
+        setMole({ isVisible: true, hole: number });
+      }, time);
+    }
+  }, [mole, playing]);
+
+  useEffect(() => {
+    if (counter === 50) {
+      setPlaying(false);
+    }
+  }, [counter]);
+
+  useEffect(() => {
+    if (mole.isVisible === true) {
+      setCounter((current) => {
+        return current + 1;
+      });
+    }
+  }, [mole.isVisible]);
 
   // Methods
-  const moleAppear = () => {
-    // Triggers a random mole to appear
-    const newMoles = [...moles]
-    var randomIndex = Math.round(Math.random() * 3)
-    newMoles[randomIndex].isVisible = !newMoles[randomIndex].isVisible
-    setMoles(newMoles);    
-  }
-
-  const moleDisappear = () => {
-    // Finds the visible mole and makes it disappear
-    for (let i=0; i < 4; i++) {
-      if (moles[i].isVisible === true) {
-        const newMoles = [...moles]
-        newMoles[i].isVisible = !newMoles[i].isVisible
-        setMoles(newMoles)
-      }
-    }
-  }
-
   const gameLoop = () => {
-    // Generates random times for the mole to appear, and then disappear
-    var i = 0
-    while (i < 5) {
-      let time = Math.round(Math.random() * 2000) + 500;
-      setTimeout(() => {
-        moleAppear()
-        let time2 = Math.round(Math.random() * 700) + 400;
-        setTimeout(moleDisappear, time2)
-      }, time)
-      i++
+    setScore(0)
+    let number = Math.round(Math.random() * 3) + 1;
+    setMole({ isVisible: true, hole: number });
+    setPlaying(true);
+  };
+
+  const handleClick = (event, moleNumber) => {
+    event.preventDefault();
+    setScore(score + 1)
+    if (score >= highScore) {
+      setHighScore(highScore + 1)
     }
-  }
+  };
 
   return (
     <div className="app">
       <div className="mole-row">
-        {moles.map((mole, index) => (
-          <Mole 
-          mole={mole} 
-          key={index} 
-          index={index}
-          moleAppear={moleAppear} />
-        ))}
+        <Hole>
+          {mole.hole === 1 && mole.isVisible === true ? (
+            <Mole onClick={(e) => handleClick(e, 1)}></Mole>
+          ) : null}
+        </Hole>
+        <Hole>
+          {mole.hole === 2 && mole.isVisible === true ? (
+            <Mole onClick={(e) => handleClick(e, 2)}></Mole>
+          ) : null}
+        </Hole>
+        <Hole>
+          {mole.hole === 3 && mole.isVisible === true ? (
+            <Mole onClick={(e) => handleClick(e, 3)}></Mole>
+          ) : null}
+        </Hole>
+        <Hole>
+          {mole.hole === 4 && mole.isVisible === true ? (
+            <Mole onClick={(e) => handleClick(e, 4)}></Mole>
+          ) : null}
+        </Hole>
       </div>
-      <button onClick={() => gameLoop()}>Start</button>
+      <div className="btn-container">
+        <button className="btn" onClick={() => gameLoop()}>Start</button>
+      </div>
+      <Score score={score} highScore={highScore}/>
     </div>
   );
 }

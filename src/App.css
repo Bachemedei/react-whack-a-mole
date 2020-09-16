@@ -1,0 +1,25 @@
+.mole-row {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: center;
+}
+
+.btn{
+    border: none;
+    border-radius: 4px;
+    background-color: grey;
+    color: white;
+    font-size: 16px;
+    padding: 14px 40px;
+    transition-duration: 0.4s;
+    /* margin: 10px; */
+}
+
+.btn:hover {
+    background-color: #ffdb58;
+    color: black;
+}

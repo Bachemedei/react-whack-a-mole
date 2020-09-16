@@ -1,10 +1,11 @@
 import React from 'react'
 import "./Moles.css"
+import Fella from './mole-fella.png'
 
-function Mole({ mole , index , ...props}) {
+function Mole({onClick}) {
     return (
-        <div className={`mole ${mole.isVisible ? "visible" : ""}`}>
-            {mole.text}
+        <div className="visible">
+            <img className="mole-img" src={Fella} alt="Mole" onClick={onClick} />
         </div>
     )
 }

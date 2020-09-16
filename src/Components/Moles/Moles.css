@@ -5,3 +5,8 @@
 .visible {
     color: black;
 }
+
+.mole-img {
+    width: 200px;
+    cursor: pointer;
+}
