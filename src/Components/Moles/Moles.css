@@ -1,12 +1,11 @@
-.mole {
-    color: white;
-}
-
-.visible {
-    color: black;
+button {
+    background: transparent;
+    border: none !important;
+    font-size:0;
+    cursor: pointer;
 }
 
 .mole-img {
     width: 200px;
-    cursor: pointer;
+    pointer-events: none;
 }

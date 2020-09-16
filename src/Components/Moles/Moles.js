@@ -4,9 +4,9 @@ import Fella from './mole-fella.png'
 
 function Mole({onClick}) {
     return (
-        <div className="visible">
-            <img className="mole-img" src={Fella} alt="Mole" onClick={onClick} />
-        </div>
+        <button onClick={onClick}>
+            <img className="mole-img" src={Fella} alt="Mole" />
+        </button>
     )
 }
 

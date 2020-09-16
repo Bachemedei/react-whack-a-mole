@@ -37,7 +37,7 @@ function App() {
   }, [mole, playing]);
 
   useEffect(() => {
-    if (counter === 50) {
+    if (counter === 20) {
       setPlaying(false);
     }
   }, [counter]);
